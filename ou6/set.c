@@ -24,7 +24,7 @@ set *set_empty()
 
 set *set_single(const int value)
 {
-    int bit_in_array = value;
+    int bit_in_array = value; // To make the code easier to read
     int no_of_bytes = bit_in_array / 8 + 1;
 
     set *s = malloc(sizeof(set));
@@ -86,21 +86,35 @@ set *set_union(const set *const s1, const set *const s2)
 
 set *set_intersection(const set *const s1, const set *const s2)
 {
-    set *s = NULL;
+    set *s = set_empty();
+
+    for (int i = 0 ; i < s1->capacity || i < s2->capacity ; i++) {
+        if (set_member_of(i, s1) && set_member_of(i, s1)) {
+            set_insert(i, s);
+        }
+    }
+
     return s;
 }
 
 
 set *set_difference(const set *const s1, const set *const s2)
 {
-    set *s = NULL;
+    set *s = set_empty();
+
+    for (int i = 0 ; i < s1->capacity || i < s2->capacity ; i++) {
+        if (set_member_of(i, s1) && !set_member_of(i, s2)) {
+            set_insert(i, s);
+        }
+    }
+
     return s;
 }
 
 
 bool set_is_empty(const set *const s)
 {
-    return true;
+    return s->size;
 }
 
 
@@ -122,12 +136,21 @@ bool set_member_of(const int value, const set *const s)
 
 int set_choose(const set *const s)
 {
+    //random
     return 1;
 }
 
 
 void set_remove(const int value, set *const s)
 {
+    if (set_member_of(value, s)) {
+        int bit_in_array = value; // To make the code easier to read
+        int byte_no = bit_in_array / 8;
+        int bit = 7 - bit_in_array % 8;
+
+        s->array[byte_no] = s->array[byte_no] & 0 << bit;
+        s->size--;
+    }
 }
 
 
@@ -145,13 +168,25 @@ bool set_subset(const set *const s1, const set *const s2)
 
 int set_size(const set *const s)
 {
-    return 1;
+    return s->size;
 }
 
 
 int *set_get_values(const set *const s)
 {
-    return NULL;
+    int *a = malloc(set_size(s) * sizeof(int));
+    int index_of_array = 0;
+    int index_of_set = 0;
+
+    while (index_of_set != s->capacity) {
+        if (set_member_of(index_of_set, s)) {
+            a[index_of_array] = index_of_set;
+            index_of_array++;
+        }
+        index_of_set++;
+    }
+
+    return a;
 }
 
 
