@@ -3,10 +3,17 @@
 #include <stdio.h>
 #include "set.h"
 
+/*
+ * file: set.c
+ * author: DV22ODM
+ * date: 2022-12-11
+ * description: Definitions of the type Set as Bitvector.
+ */
+
 struct set {
-    int capacity;
-    int size;
-    char *array;
+    int capacity;   // How many bits the set contains.
+    int size;       // Amount of current members.
+    char *array;    // Bitvector as array of char.
 };
 
 
@@ -114,7 +121,7 @@ set *set_difference(const set *const s1, const set *const s2)
 
 bool set_is_empty(const set *const s)
 {
-    if (s->size == 0) {
+    if (set_size(s) == 0) {
         return true;
     } else {
         return false;
@@ -190,10 +197,11 @@ bool set_subset(const set *const s1, const set *const s2)
     int s2_no_of_bytes = s2->capacity / 8;
 
     int i = 0;
-    while (i < s1_no_of_bytes || i < s2_no_of_bytes) {
+    while (i < s1_no_of_bytes && i < s2_no_of_bytes) {
         if ((s1->array[i] & s2->array[i]) != s1->array[i]) {
             return false;
         }
+
         i++;
     }
 
@@ -219,6 +227,7 @@ int *set_get_values(const set *const s)
                 a[index_of_array] = index_of_set;
                 index_of_array++;
             }
+
             index_of_set++;
         }
 
