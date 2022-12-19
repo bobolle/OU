@@ -114,7 +114,11 @@ set *set_difference(const set *const s1, const set *const s2)
 
 bool set_is_empty(const set *const s)
 {
-    return s->size;
+    if (s->size == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -136,8 +140,13 @@ bool set_member_of(const int value, const set *const s)
 
 int set_choose(const set *const s)
 {
-    //random
-    return 1;
+    // no good place to put srand(time(NULL));
+    // mind is fried, couldn't think of a better solution :/
+    srand(time(NULL));
+    int r = rand() % set_size(s);
+    int *a = set_get_values(s);
+
+    return a[r];
 }
 
 
@@ -156,13 +165,39 @@ void set_remove(const int value, set *const s)
 
 bool set_equal(const set *const s1, const set *const s2)
 {
-    return false;
+    if ((s1->capacity == s2->capacity) && (set_size(s1) == set_size(s2))) {
+        int no_of_bytes = s1->capacity / 8;
+        int i = 0;
+
+        while (i != no_of_bytes) {
+            if (s1->array[i] != s2->array[i]) {
+                return false;
+            }
+
+            i++;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
 bool set_subset(const set *const s1, const set *const s2)
 {
-    return false;
+    int s1_no_of_bytes = s1->capacity / 8;
+    int s2_no_of_bytes = s2->capacity / 8;
+
+    int i = 0;
+    while (i < s1_no_of_bytes || i < s2_no_of_bytes) {
+        if ((s1->array[i] & s2->array[i]) != s1->array[i]) {
+            return false;
+        }
+        i++;
+    }
+
+    return true;
 }
 
 
@@ -174,19 +209,23 @@ int set_size(const set *const s)
 
 int *set_get_values(const set *const s)
 {
-    int *a = malloc(set_size(s) * sizeof(int));
-    int index_of_array = 0;
-    int index_of_set = 0;
+    if (!set_is_empty(s)) {
+        int *a = malloc(set_size(s) * sizeof(int));
+        int index_of_array = 0;
+        int index_of_set = 0;
 
-    while (index_of_set != s->capacity) {
-        if (set_member_of(index_of_set, s)) {
-            a[index_of_array] = index_of_set;
-            index_of_array++;
+        while (index_of_set != s->capacity) {
+            if (set_member_of(index_of_set, s)) {
+                a[index_of_array] = index_of_set;
+                index_of_array++;
+            }
+            index_of_set++;
         }
-        index_of_set++;
-    }
 
-    return a;
+        return a;
+    } else {
+        return NULL;
+    }
 }
 
 
