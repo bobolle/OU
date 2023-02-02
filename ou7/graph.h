@@ -1,21 +1,17 @@
 #ifndef GRAPH_H
 #define GRAPH_H
-
 #include "set.h"
 
 typedef struct graph {
-    set *v;
-    set *e;
+    int node_count;
+    set **adjMatrix;
 } graph;
 
-graph *graph_empty();
-//graph graph_make(int n);
-//graph graph_insert-edge(edge e, graph g);
+graph *Make(int n);
+void insert_edge(graph *g, int row, int col);
+void print_all_edges(graph *g);
 
-//isempty
-//hasnoedge
-//choosenode
 //neighbours
-//deletenode
-//deleteedge
+int no_of_nodes(graph *g);
+
 #endif

@@ -31,8 +31,21 @@ set *set_empty()
 
 set *set_single(const int value)
 {
-    set *s = set_empty();
-    set_insert(value, s);
+    int bit_in_array = value; // To make the code easier to read
+    int no_of_bytes = bit_in_array / 8 + 1;
+
+    set *s = malloc(sizeof(set));
+    s->size = 1;
+    s->capacity = no_of_bytes * 8;
+    s->array = malloc(no_of_bytes * sizeof(char));
+
+    for (int i = 1 ; i < no_of_bytes ; i++) {
+        s->array[i] = 0;
+    }
+
+    int byte_no = bit_in_array / 8;
+    int bit = 7 - bit_in_array % 8;
+    s->array[byte_no] = s->array[byte_no] | 1 << bit;
 
     return s;
 }
@@ -83,7 +96,7 @@ set *set_intersection(const set *const s1, const set *const s2)
     set *s = set_empty();
 
     for (int i = 0 ; i < s1->capacity || i < s2->capacity ; i++) {
-        if (set_member_of(i, s1) && set_member_of(i, s2)) {
+        if (set_member_of(i, s1) && set_member_of(i, s1)) {
             set_insert(i, s);
         }
     }
@@ -134,15 +147,13 @@ bool set_member_of(const int value, const set *const s)
 
 int set_choose(const set *const s)
 {
-    // user responsibility to set srand
-    int temp;
+    // no good place to put srand(time(NULL));
+    // mind is fried, couldn't think of a better solution :/
+    srand(time(NULL));
     int r = rand() % set_size(s);
     int *a = set_get_values(s);
 
-    temp = a[r];
-    free(a);
-
-    return temp;
+    return a[r];
 }
 
 
@@ -153,7 +164,7 @@ void set_remove(const int value, set *const s)
         int byte_no = bit_in_array / 8;
         int bit = 7 - bit_in_array % 8;
 
-        s->array[byte_no] = s->array[byte_no] & ~1 << bit;
+        s->array[byte_no] = s->array[byte_no] & 0 << bit;
         s->size--;
     }
 }
