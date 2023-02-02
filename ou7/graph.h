@@ -9,6 +9,7 @@ typedef struct graph {
 
 graph *Make(int n);
 void insert_edge(graph *g, int row, int col);
+void expand_graph(graph *g, int new_max);
 void print_all_edges(graph *g);
 
 //neighbours
