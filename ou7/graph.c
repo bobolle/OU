@@ -16,20 +16,7 @@ graph *Make(int n) {
 }
 
 
-void expand_graph(graph *g, int new_max) {
-    g->adjMatrix = realloc(g->adjMatrix, (new_max +1) * sizeof(set*));
-
-    for (int n = g->node_count +1; n <= new_max; n++) {
-        g->adjMatrix[n] = set_empty();
-    }
-
-    g->node_count = new_max;
-}
-
-
 void insert_edge(graph *g, int i, int j) {
-    printf("max: %d, i:%d, j:%d\n", g->node_count, i, j);
-
     if (j > g->node_count) {
         expand_graph(g, j);
     }
@@ -43,23 +30,44 @@ void insert_edge(graph *g, int i, int j) {
 }
 
 
-void print_all_edges(graph *g) {
-    for (int i = 0; i <= g->node_count; i++) {
-        int *a = set_get_values(g->adjMatrix[i]);
-        for (int j = 0; j < set_size(g->adjMatrix[i]); j++) {
-            printf("(%d,%d)\n", i, a[j]);
-
-        }
-    }
-}
-
-
-set *neighbours(graph *g, int node) {
-    set *s = set_empty();
-    return s;
+set *neighbours(int node, graph *g) {
+    return g->adjMatrix[node];
 }
 
 
 int no_of_nodes(graph *g) {
     return g->node_count;
+}
+
+
+void expand_graph(graph *g, int new_max) {
+    g->adjMatrix = realloc(g->adjMatrix, (new_max +1) * sizeof(set*));
+
+    for (int n = g->node_count +1; n <= new_max; n++) {
+        g->adjMatrix[n] = set_empty();
+    }
+
+    g->node_count = new_max;
+}
+
+
+void print_all_edges(graph *g) {
+    for (int i = 0; i <= g->node_count; i++) {
+        int *a = set_get_values(g->adjMatrix[i]);
+        printf("%d:", i);
+        for (int j = 0; j < set_size(g->adjMatrix[i]); j++) {
+            printf(" %d", a[j]);
+        }
+        printf("\n");
+    }
+}
+
+
+void destory_graph(graph *g) {
+    for (int i = 0; i <= g->node_count; i++) {
+        free(g->adjMatrix[i]);
+    }
+
+    free(g->adjMatrix);
+    free(g);
 }
