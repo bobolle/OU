@@ -75,8 +75,6 @@ void set_insert(const int value, set *s)
 }
 
 
-// Note: More effective implementations are possible, but this is
-// okay for this assignment.
 set *set_union(const set *const s1, const set *const s2)
 {
     set *s = set_empty();
@@ -147,9 +145,6 @@ bool set_member_of(const int value, const set *const s)
 
 int set_choose(const set *const s)
 {
-    // no good place to put srand(time(NULL));
-    // mind is fried, couldn't think of a better solution :/
-    srand(time(NULL));
     int r = rand() % set_size(s);
     int *a = set_get_values(s);
 
