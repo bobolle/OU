@@ -10,7 +10,7 @@ void depthFirst(int n, graph *g);
 void insert_edges(graph *g);
 
 int main(void) {
-    graph *g = Make(10);
+    graph *g = create_graph(10);
 
     srand(time(NULL));
     insert_edges(g);
@@ -19,7 +19,7 @@ int main(void) {
 
     depthFirst(0, g);
 
-    print_all_edges(g);
+    graph_print_all_edges(g);
 
     return 0;
 }
@@ -29,7 +29,7 @@ void insert_edges(graph *g) {
         int f_random = rand() % 20;
         int s_random = rand() % 20;
 
-        insert_edge(g, f_random, s_random);
+        graph_insert_edge(g, f_random, s_random);
     }
 
 }
@@ -44,7 +44,7 @@ void init_visit(graph *g) {
 void depthFirst(int n, graph *g) {
     printf("visited: %d\n", n);
     g->visit[n] = true;
-    set *neighbourSet = neighbours(n, g);
+    set *neighbourSet = graph_neighbours(n, g);
     for (int v = 0; v < g->node_count; v++) {
         if (set_member_of(v, neighbourSet)) {
             if (!g->visit[v]) {

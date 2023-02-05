@@ -31,7 +31,7 @@ typedef struct graph {
  * @param n Amount of how many nodes the new graph will have.
  * @return The created graph.
  */
-graph *Make(int n);
+graph *graph_create(int n);
 
 
 /**
@@ -42,7 +42,7 @@ graph *Make(int n);
  * @param i The first node in the edge.
  * @param j The second node in the edge.
  */
-void insert_edge(graph *g, int i, int j);
+void graph_insert_edge(graph *g, int i, int j);
 
 
 /**
@@ -56,7 +56,7 @@ void insert_edge(graph *g, int i, int j);
  *
  * @return Set of neighbours of the node.
  */
-set *neighbours(int node, graph *g);
+set *graph_neighbours(int node, graph *g);
 
 
 /**
@@ -68,7 +68,7 @@ set *neighbours(int node, graph *g);
  *
  * @return The amount of nodes.
  */
-int no_of_nodes(graph *g);
+int graph_no_of_nodes(graph *g);
 
 
 /**
@@ -79,7 +79,7 @@ int no_of_nodes(graph *g);
  * @param g The graph.
  * @param new_max New size of the graph.
  */
-void expand_graph(graph *g, int new_max);
+void graph_expand_graph(graph *g, int new_max);
 
 
 /**
@@ -90,7 +90,7 @@ void expand_graph(graph *g, int new_max);
  *
  * @param g The graph.
  */
-void print_all_edges(graph *g);
+void graph_print_all_edges(graph *g);
 
 
 /**
@@ -101,7 +101,7 @@ void print_all_edges(graph *g);
  *
  * @param g The graph.
  */
-void destory_graph(graph *g);
+void graph_destroy(graph *g);
 
 /**
  * @ }

@@ -10,7 +10,7 @@
  * description: Definitions of the type Graph.
  */
 
-graph *Make(int n) {
+graph *graph_create(int n) {
     graph *g = malloc(sizeof(graph));
     g->node_count = n;
     g->adjMatrix = malloc((n+1) * sizeof(set*));
@@ -23,7 +23,7 @@ graph *Make(int n) {
 }
 
 
-void insert_edge(graph *g, int i, int j) {
+void graph_insert_edge(graph *g, int i, int j) {
     if (j > g->node_count) {
         expand_graph(g, j);
     }
@@ -37,12 +37,12 @@ void insert_edge(graph *g, int i, int j) {
 }
 
 
-set *neighbours(int node, graph *g) {
+set *graph_neighbours(int node, graph *g) {
     return g->adjMatrix[node];
 }
 
 
-int no_of_nodes(graph *g) {
+int graph_no_of_nodes(graph *g) {
     return g->node_count;
 }
 
@@ -58,7 +58,7 @@ void expand_graph(graph *g, int new_max) {
 }
 
 
-void print_all_edges(graph *g) {
+void graph_print_all_edges(graph *g) {
     for (int i = 0; i <= g->node_count; i++) {
         int *a = set_get_values(g->adjMatrix[i]);
         printf("%d:", i);
@@ -70,7 +70,7 @@ void print_all_edges(graph *g) {
 }
 
 
-void destory_graph(graph *g) {
+void graph_destroy(graph *g) {
     for (int i = 0; i <= g->node_count; i++) {
         free(g->adjMatrix[i]);
     }
