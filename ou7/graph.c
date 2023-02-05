@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+ * file: graph.c
+ * author: DV22ODM
+ * date: 2022-02-04
+ * description: Definitions of the type Graph.
+ */
+
 graph *Make(int n) {
     graph *g = malloc(sizeof(graph));
     g->node_count = n;
