@@ -22,7 +22,7 @@ set *set_empty()
     set *s = malloc(sizeof(set));
     s->capacity = 8;
     s->size = 0;
-    s->array = malloc(s->size * sizeof(char));
+    s->array = malloc(sizeof(char));
     s->array[0] = 0;
 
     return s;
@@ -75,8 +75,6 @@ void set_insert(const int value, set *s)
 }
 
 
-// Note: More effective implementations are possible, but this is
-// okay for this assignment.
 set *set_union(const set *const s1, const set *const s2)
 {
     set *s = set_empty();
