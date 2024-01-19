@@ -1,1 +1,1 @@
-Programming assignment written in C.
+Programming assignments written in C.
