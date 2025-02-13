@@ -1,6 +1,0 @@
-[1,2...100]
-0 1 50 100 101
-förväntad output
-konstruera testet
-utför testet
-jämnför mot förväntat output
