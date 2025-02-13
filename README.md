@@ -1,1 +1,1 @@
-Programming assignments written in C.
+Data structures written in C I wrote for school assignment.
